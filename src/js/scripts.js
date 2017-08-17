@@ -27,11 +27,9 @@
   HelloWorldDevsTysonSteele.tourCarousel('.js-services-carousel', {
     items: 1,
     margin: 40,
-    navText: [
-      '<img src="assets/services-left.png">',
-      '<img src="assets/services-right.png">'
-    ],
-    autoHeight: true
+    nav: false,
+    autoHeight: true,
+    dots: true
   });
   HelloWorldDevsTysonSteele.tourCarousel('.js-services-carousel--two', {
     items: 1,
@@ -41,10 +39,7 @@
     autoplayTimeout: 2000,
     autoplayHoverPause:false,
     autoWidth: false,
-    navText: [
-      '<img src="assets/services-left.png">',
-      '<img src="assets/services-right.png">'
-    ],
+    nav: false,
     dots: false,
     margin: 30,
     slideBy: 1,
@@ -71,10 +66,7 @@
     autoplayTimeout: 2000,
     autoplayHoverPause:false,
     autoWidth: false,
-    navText: [
-      '<img src="assets/services-left.png">',
-      '<img src="assets/services-right.png">'
-    ],
+    nav: false,
     dots: false,
     margin: 30,
     slideBy: 1,
@@ -115,16 +107,25 @@
       }
     }
   });
-  HelloWorldDevsTysonSteele.pyramidCarousel('.js-team-carousel', {
-    items: 1,
+  HelloWorldDevsTysonSteele.pyramidCarousel('.js-smile-carousel', {
+    items: 2,
     autoplay: true,
     navText: [
-      '<img src="assets/arrow-left.png">',
+      '<img src="assets/left-arrow.png">',
       '<img src="assets/right-arrow.png">'
     ],
     responsive: {
       550: {
-        items: 2
+        items: 3
+      },
+      768: {
+        items: 4
+      },
+      992: {
+        items: 5
+      },
+      1200: {
+        items: 6
       }
     },
     margin: 30
@@ -132,12 +133,40 @@
   HelloWorldDevsTysonSteele.updateCopyright('.js-copyright-year');
 
   // ======= Google Maps =======
-  HelloWorldDevsTysonSteele.googleMap('#google-map5', '36.3054821,-95.3133126', '36.3054821,-95.3133126');
+  HelloWorldDevsTysonSteele.googleMap('#google-map5', '37.039987,-88.660107', '37.039987,-88.660107');
 
-  $('#gallery-btn').click( function(e) {
-    e.preventDefault();
-    $('#gallery-target').click();
+  $('[data-lightboxpointer^="#thumb"]').each(function(index, element) {
+    $(element).click(function(e) {
+      e.preventDefault();
+      var target = $(this).attr('data-lightboxpointer');
+      $(target).click();
+    });
   });
 
-}(jQuery, HelloWorldDevsTysonSteele));
+  $('#modal--implant').on('hidden.bs.modal', function() {
+    var $movie = $('#movie');
+    var parent = $movie.parent();
 
+    parent.empty().append($movie);
+  });
+
+  $('.video-queue img').each(function(index, element) {
+    $(element).click(function(e) {
+      e.preventDefault();
+
+      $('.video-queue>div').each(function(index, element) {
+        $(element).removeClass('active');
+      });
+
+      $(this).parent().toggleClass('active');
+
+      var newSrc = $(this).attr('data-youtube-embed');
+      $('#active-video').attr('src', newSrc);
+    });
+  });
+
+  HelloWorldDevsTysonSteele.stopVideoModal('#modal--sedation', '#sedation-video')
+
+
+
+}(jQuery, HelloWorldDevsTysonSteele));
